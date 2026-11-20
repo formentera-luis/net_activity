@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cisco Packet Tracer — NetPilot [EVE_Lab_Router]</title>
+  <style>
+    {% include 'style.css' %}
+  </style>
+</head>
+<body>
+  <div class="pt-window">
+    <!-- Top Application Title Bar -->
+    <header class="pt-titlebar">
+      <div class="pt-title-left">
+        <span class="pt-app-badge">PT</span>
+        <span>Networking Activity</span>
+      </div>
+      <span class="pt-env-pill">LOCAL LAB · EVE-NG</span>
+    </header>
+
+    <!-- Classic Desktop Menu Strip -->
+    <nav class="pt-menubar" aria-label="Application menu">
+      <span class="pt-menu-item">File</span>
+      <span class="pt-menu-item">Edit</span>
+      <span class="pt-menu-item">Options</span>
+      <span class="pt-menu-item">View</span>
+      <span class="pt-menu-item">Tools</span>
+      <span class="pt-menu-item">Extensions</span>
+      <span class="pt-menu-item">Help</span>
+    </nav>
+
+    <!-- Toolbar -->
+    <div class="pt-toolbar">
+      <div class="toolbar-group">
+        <div class="workspace-crumb">
+          <span>Workspace</span>
+          <span>/</span>
+          <strong>Router</strong>
+        </div>
+        <span class="tool-sep" aria-hidden="true"></span>
+        <span class="toolbar-note">Read-only IOS diagnostic session</span>
+      </div>
+
+      <div class="toolbar-group">
+        <form action="{{ url_for('connect') }}" method="post" id="toolbar-connect-form" class="inline-form">
+          <button class="pt-btn pt-btn-primary" type="submit" data-run-btn>
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M4 2.5l9 5.5-9 5.5v-11z"/>
+            </svg>
+            <span data-run-label>Run router checks</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Main Workspace -->
+    <main class="pt-workspace">
+      <!-- Left: Logical Topology & Node Parameters -->
+      <aside class="topology-panel" aria-label="Logical topology">
+        <div class="panel-header">
+          <span>Logical Workspace</span>
+          <span>[Root]</span>
+        </div>
+
+        <div class="logical-canvas">
+          <span class="canvas-tag">Realtime</span>
+
+          <div class="topology-diagram">
+            <!-- NetPilot Host Node -->
+            <div class="topo-node">
+              <svg width="46" height="40" viewBox="0 0 48 42" aria-hidden="true">
+                <rect x="6" y="4" width="36" height="24" rx="2" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+                <rect x="10" y="8" width="28" height="16" fill="#049fd9"/>
+                <rect x="18" y="28" width="12" height="4" fill="#64748b"/>
+                <rect x="10" y="32" width="28" height="4" rx="1" fill="#475569"/>
+              </svg>
+              <span class="topo-label">NetPilot-PC</span>
+              <span class="topo-sub">Telnet Client</span>
+            </div>
+
+            <!-- Straight-Through Copper Link with PT Link Lights -->
+            <div class="topo-link" aria-hidden="true">
+              <span class="link-light {% if error %}down{% endif %}"></span>
+              <span class="link-port-tag">:32770</span>
+              <span class="link-light {% if error %}down{% endif %}"></span>
+            </div>
+
+            <!-- Cisco Router Cylinder SVG -->
+            <div class="topo-node selected">
+              <svg width="54" height="40" viewBox="0 0 60 44" aria-hidden="true">
+                <path d="M6 15 v15 c0 6.6 10.7 12 24 12 s24-5.4 24-12 V15" fill="#007099" stroke="#003b52" stroke-width="2"/>
+                <ellipse cx="30" cy="15" rx="24" ry="11" fill="#049fd9" stroke="#003b52" stroke-width="2"/>
+                <path d="M18 11 l6 3 m0-3 v3 h-4" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <path d="M42 11 l-6 3 m0-3 v3 h4" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <path d="M24 16 l-6 3 m0-3 v3 h4" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                <path d="M36 16 l6 3 m0-3 v3 h-4" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+              </svg>
+              <span class="topo-label">Router</span>
+              <span class="topo-sub">192.168.10.25</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="prop-section">
+          <table class="prop-table" aria-label="Device specifications">
+            <tbody>
+              <tr>
+                <th>Link Status</th>
+                <td>
+                  {% if error %}
+                    <span class="status-badge down">
+                      <span class="status-dot down"></span> Down / Unreachable
+                    </span>
+                  {% elif results %}
+                    <span class="status-badge up">
+                      <span class="status-dot"></span> Up / Checks Complete
+                    </span>
+                  {% else %}
+                    <span class="status-badge idle">
+                      <span class="status-dot idle"></span> Ready (Standby)
+                    </span>
+                  {% endif %}
+                </td>
+              </tr>
+              <tr>
+                <th>Management IP</th>
+                <td><code>192.168.10.25</code></td>
+              </tr>
+              <tr>
+                <th>Telnet Port</th>
+                <td><code>32770</code></td>
+              </tr>
+              <tr>
+                <th>IOS Driver</th>
+                <td><code>Cisco IOS</code></td>
+              </tr>
+              <tr>
+                <th>Environment</th>
+                <td><code>EVE-NG Lab</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="action-box">
+            <p>
+              {% if results %}
+                Command results captured. Session closed normally.
+              {% elif error %}
+                Target node unreachable. Ensure EVE-NG router is powered on.
+              {% else %}
+                Connect to collect version, interface status, and running-config.
+              {% endif %}
+            </p>
+            <form action="{{ url_for('connect') }}" method="post" id="sidebar-connect-form" class="inline-form">
+              <button class="pt-btn pt-btn-primary" type="submit" data-run-btn>
+                <span data-run-label>Run router checks</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right: Packet Tracer Device Properties & CLI Dialog -->
+      <section class="device-dialog" aria-labelledby="dialog-title">
+        <div class="dialog-titlebar">
+          <span id="dialog-title">Router — Cisco IOS Console</span>
+          <span class="dialog-target">192.168.10.25:32770</span>
+        </div>
+
+        <div class="pt-tabs" role="tablist">
+          <button type="button" class="pt-tab active" role="tab" aria-selected="true" aria-controls="pane-cli" data-tab="cli">CLI</button>
+          <button type="button" class="pt-tab" role="tab" aria-selected="false" aria-controls="pane-config" data-tab="config">Config</button>
+          <button type="button" class="pt-tab" role="tab" aria-selected="false" aria-controls="pane-physical" data-tab="physical">Physical</button>
+        </div>
+
+        <!-- TAB 1: CLI (Default Active) -->
+        <div class="tab-pane active" id="pane-cli" role="tabpanel">
+          <div class="cli-subheader">
+            <h2>IOS Command Line Interface</h2>
+            <div class="cli-controls">
+              {% if results %}
+                <span class="session-pill">Session closed normally</span>
+              {% endif %}
+              <button type="button" class="pt-btn" id="toggle-theme-btn">Dark CLI</button>
+            </div>
+          </div>
+
+          {% if error %}
+            <div class="pt-alert" role="alert">
+              <strong>% Error:</strong>
+              <span>{{ error }}</span>
+            </div>
+          {% endif %}
+
+          <div class="cli-screen" id="cli-screen">
+            {% if results %}
+              <p class="cli-banner-text">Trying 192.168.10.25, 32770 ... Open
+User Access Verification — Read-Only Diagnostic Session</p>
+              {% for command, output in results.items() %}
+                <article class="cmd-entry">
+                  <div class="cmd-prompt-line">
+                    <span>EVE_Lab_Router# {{ command }}</span>
+                    <button type="button" class="pt-btn copy-btn" data-copy>Copy</button>
+                  </div>
+                  <pre class="cmd-output">{{ output }}</pre>
+                </article>
+              {% endfor %}
+              <p class="cli-banner-text">[Connection to 192.168.10.25 closed by foreign host]</p>
+            {% else %}
+              <pre class="cli-banner-text">Cisco IOS Software, EVE-NG Virtual Router (C7200-ADVENTERPRISEK9-M)
+Compiled for Lab Monitoring via NetPilot
+
+Router con0 is now available
+
+Press "Run router checks" to open a Telnet session to 192.168.10.25:32770
+and execute the configured show commands...</pre>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- TAB 2: Config -->
+        <div class="tab-pane" id="pane-config" role="tabpanel">
+          <div class="cli-subheader">
+            <h2>Global &amp; Management Settings</h2>
+          </div>
+          <div class="config-card">
+            <table class="prop-table">
+              <tbody>
+                <tr>
+                  <th>Display Name</th>
+                  <td><code>Router</code></td>
+                </tr>
+                <tr>
+                  <th>Management Gateway</th>
+                  <td><code>192.168.10.25</code></td>
+                </tr>
+                <tr>
+                  <th>Console Socket</th>
+                  <td><code>TCP / Telnet Port 32770</code></td>
+                </tr>
+                <tr>
+                  <th>Device Driver</th>
+                  <td><code>Cisco IOS (NetPilot Read-Only)</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 3: Physical -->
+        <div class="tab-pane" id="pane-physical" role="tabpanel">
+          <div class="cli-subheader">
+            <h2>Physical Device View — Cisco ISR Chassis</h2>
+          </div>
+          <div class="config-card">
+            <div class="chassis-box">
+              <div>
+                <div class="chassis-brand">CISCO SYSTEMS</div>
+                <div class="chassis-sub">EVE-NG Lab Router · Power: ON</div>
+              </div>
+              <div class="chassis-ports">
+                <div class="port-unit">
+                  <div class="console-port" title="Console Port"></div>
+                  <span class="port-label con">CON</span>
+                </div>
+                <div class="port-unit">
+                  <div class="rj45-port {% if not error %}active{% endif %}" title="GigabitEthernet0/0"></div>
+                  <span class="port-label">Gi0/0</span>
+                </div>
+                <div class="port-unit">
+                  <div class="rj45-port" title="GigabitEthernet0/1"></div>
+                  <span class="port-label">Gi0/1</span>
+                </div>
+              </div>
+            </div>
+            <p class="physical-note">
+              Out-of-band console access bridged via EVE-NG host port <code>32770</code>.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Packet Tracer Status Bar -->
+    <footer class="pt-statusbar">
+      <div class="status-group">
+        <span class="realtime-indicator">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <circle cx="8" cy="8" r="6"/>
+          </svg>
+          Realtime
+        </span>
+        <span>Node: <strong>Router</strong></span>
+      </div>
+      <div class="status-group">
+        <span>Target: <code>192.168.10.25:32770</code></span>
+        <span>NetPilot EVE-NG Monitor</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    {% include 'script.js' %}
+  </script>
+</body>
+</html>

@@ -1,0 +1,765 @@
+:root {
+  --chrome-bg: #e3e8ee;
+  --chrome-dark: #cfd7e0;
+  --panel-bg: #f3f5f8;
+  --canvas-bg: #ffffff;
+  --border: #9aa6b4;
+  --border-light: #c5ced8;
+  --cisco-blue: #049fd9;
+  --cisco-dark: #005073;
+  --cisco-header: #1b4965;
+  --text: #1c242b;
+  --text-muted: #52606d;
+  --pt-green: #00b33c;
+  --pt-red: #d92b2b;
+  --pt-amber: #e69500;
+  --font-ui: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --font-cli: "Consolas", "Courier New", Courier, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #bcc6d1;
+  color: var(--text);
+  font: 12px/1.45 var(--font-ui);
+  display: flex;
+  flex-direction: column;
+}
+
+button, code, pre {
+  font-family: inherit;
+}
+
+code, pre {
+  font-family: var(--font-cli);
+}
+
+.inline-form {
+  margin: 0;
+}
+
+/* Application Window Shell */
+.pt-window {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--chrome-bg);
+}
+
+/* Title Bar */
+.pt-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: linear-gradient(180deg, #1f567d 0%, #163e5c 100%);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  border-bottom: 1px solid #0f2c42;
+}
+
+.pt-title-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pt-app-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 5px;
+  border-radius: 2px;
+  background: var(--cisco-blue);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.pt-env-pill {
+  padding: 2px 8px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* Classic Desktop Menu Bar */
+.pt-menubar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 8px;
+  background: var(--panel-bg);
+  border-bottom: 1px solid var(--border-light);
+  font-size: 12px;
+  color: var(--text);
+}
+
+.pt-menu-item {
+  padding: 3px 8px;
+  border-radius: 2px;
+  cursor: default;
+  user-select: none;
+}
+
+.pt-menu-item:hover {
+  background: #dce6f2;
+}
+
+/* Toolbar */
+.pt-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 12px;
+  background: linear-gradient(180deg, #f8fafc 0%, #e4e9ef 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-note {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.tool-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border-light);
+  margin: 0 2px;
+}
+
+.workspace-crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.workspace-crumb strong {
+  color: var(--cisco-dark);
+}
+
+/* Primary PT Action Button */
+.pt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid #6b7c8f;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #ffffff 0%, #dce3ec 100%);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 #ffffff;
+}
+
+.pt-btn:hover {
+  border-color: var(--cisco-blue);
+  background: linear-gradient(180deg, #f2faff 0%, #d4ecfa 100%);
+}
+
+.pt-btn:active {
+  background: #c8d6e5;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.pt-btn:focus-visible,
+.pt-tab:focus-visible {
+  outline: 2px solid var(--cisco-blue);
+  outline-offset: 1px;
+}
+
+.pt-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.pt-btn-primary {
+  border-color: #00668c;
+  background: linear-gradient(180deg, #19b0e8 0%, #0489bd 100%);
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.pt-btn-primary:hover {
+  border-color: #004c69;
+  background: linear-gradient(180deg, #24bbf2 0%, #0496cf 100%);
+}
+
+.copy-btn {
+  height: 22px;
+  padding: 0 8px;
+  font-size: 11px;
+}
+
+/* Main Split Workspace */
+.pt-workspace {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 310px minmax(0, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+/* Left Panel: Logical Topology Canvas */
+.topology-panel {
+  display: flex;
+  flex-direction: column;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  background: linear-gradient(180deg, #eef2f6 0%, #d7dfe8 100%);
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 700;
+  color: #2c3844;
+}
+
+.logical-canvas {
+  position: relative;
+  padding: 22px 14px 18px;
+  background-color: #ffffff;
+  background-image: radial-gradient(#d5dde6 1px, transparent 1px);
+  background-size: 16px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.canvas-tag {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  padding: 1px 6px;
+  background: #eef4f8;
+  border: 1px solid #c6d4e1;
+  border-radius: 2px;
+  font-size: 10px;
+  color: var(--cisco-dark);
+  font-weight: 600;
+}
+
+.topology-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.topo-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 96px;
+  text-align: center;
+}
+
+.topo-label {
+  padding: 1px 5px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid transparent;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.topo-node.selected .topo-label {
+  background: #dceeff;
+  border-color: #7ab8f5;
+}
+
+.topo-sub {
+  font-family: var(--font-cli);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* Packet Tracer Link Line + Green/Red Triangles */
+.topo-link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 24px;
+  margin: 0 -4px 22px;
+}
+
+.topo-link::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 50%;
+  height: 2px;
+  background: #222222;
+  transform: translateY(-50%);
+}
+
+.link-light {
+  position: relative;
+  z-index: 1;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 10px solid var(--pt-green);
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.35));
+}
+
+.link-light.down {
+  border-bottom-color: var(--pt-red);
+}
+
+.link-port-tag {
+  position: relative;
+  z-index: 1;
+  padding: 0 4px;
+  background: #ffffff;
+  font-family: var(--font-cli);
+  font-size: 10px;
+  color: #334155;
+}
+
+/* Device Properties Summary Table */
+.prop-section {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.prop-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  font-size: 11px;
+}
+
+.prop-table th,
+.prop-table td {
+  padding: 6px 8px;
+  border: 1px solid var(--border-light);
+  text-align: left;
+}
+
+.prop-table th {
+  width: 44%;
+  background: #eef2f6;
+  color: #334155;
+  font-weight: 600;
+}
+
+.prop-table td code {
+  font-size: 11px;
+  color: #0f172a;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.status-badge.down {
+  color: var(--pt-red);
+}
+
+.status-badge.up {
+  color: #00802b;
+}
+
+.status-badge.idle {
+  color: #8a5a00;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pt-green);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.status-dot.down {
+  background: var(--pt-red);
+}
+
+.status-dot.idle {
+  background: var(--pt-amber);
+}
+
+.action-box {
+  margin-top: auto;
+  padding: 10px;
+  background: #e8eef4;
+  border: 1px solid var(--border-light);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.action-box p {
+  margin: 0;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.action-box .pt-btn-primary {
+  width: 100%;
+  justify-content: center;
+  height: 31px;
+}
+
+/* Right Panel: Packet Tracer Device Properties & CLI Dialog */
+.device-dialog {
+  display: flex;
+  flex-direction: column;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.dialog-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  background: linear-gradient(180deg, #2d6a94 0%, #1e4d6e 100%);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.dialog-target {
+  font-family: var(--font-cli);
+  font-size: 11px;
+}
+
+/* Classic Packet Tracer Dialog Tabs */
+.pt-tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 6px 10px 0;
+  background: var(--chrome-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.pt-tab {
+  padding: 5px 14px;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  background: #d7dfe8;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pt-tab:hover {
+  background: #e6ecf2;
+}
+
+.pt-tab.active {
+  background: var(--panel-bg);
+  color: #000000;
+  position: relative;
+  top: 1px;
+  padding-bottom: 6px;
+}
+
+.tab-pane {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+  padding: 12px;
+}
+
+.tab-pane.active {
+  display: flex;
+}
+
+.cli-subheader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.cli-subheader h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.cli-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.session-pill {
+  padding: 2px 8px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: var(--font-cli);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Packet Tracer Alert Banner */
+.pt-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  background: #fff2f2;
+  border: 1px solid #e08b8b;
+  border-left: 4px solid var(--pt-red);
+  color: #7f1d1d;
+  font-size: 12px;
+}
+
+/* Signature Packet Tracer White CLI Screen */
+.cli-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 360px;
+  padding: 14px 16px;
+  background: #ffffff;
+  border: 1px solid #7f8c9a;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+  color: #111111;
+  font-family: var(--font-cli);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.cli-screen.dark-cli {
+  background: #0c0e12;
+  color: #e6edf3;
+  border-color: #334155;
+}
+
+.cli-banner-text {
+  color: #475569;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.cli-screen.dark-cli .cli-banner-text {
+  color: #8b949e;
+}
+
+.cmd-entry {
+  border-bottom: 1px dashed #cbd5e1;
+  padding-bottom: 10px;
+}
+
+.cli-screen.dark-cli .cmd-entry {
+  border-bottom-color: #26303d;
+}
+
+.cmd-entry:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.cmd-prompt-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+  font-weight: 700;
+  color: #005073;
+}
+
+.cli-screen.dark-cli .cmd-prompt-line {
+  color: #58a6ff;
+}
+
+.cmd-output {
+  margin: 0;
+  max-height: 340px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* Config & Physical Tabs */
+.config-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.chassis-box {
+  background: #23272d;
+  border: 2px solid #495057;
+  border-radius: 4px;
+  padding: 14px 16px;
+  color: #e2e8f0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.chassis-brand {
+  font-weight: 700;
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.chassis-sub {
+  font-size: 11px;
+  color: #94a3b8;
+  font-family: var(--font-cli);
+}
+
+.chassis-ports {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.port-unit {
+  text-align: center;
+}
+
+.port-label {
+  display: block;
+  margin-top: 2px;
+  font-size: 9px;
+  font-family: var(--font-cli);
+}
+
+.port-label.con {
+  color: #38bdf8;
+}
+
+.rj45-port {
+  width: 28px;
+  height: 22px;
+  background: #111317;
+  border: 2px solid #8a94a0;
+  border-radius: 2px;
+  position: relative;
+}
+
+.rj45-port.active::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 2px;
+  width: 6px;
+  height: 4px;
+  background: var(--pt-green);
+}
+
+.console-port {
+  width: 28px;
+  height: 22px;
+  background: #049fd9;
+  border: 2px solid #b8d8e8;
+  border-radius: 2px;
+}
+
+.physical-note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+/* Bottom Status Bar */
+.pt-statusbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 12px;
+  background: var(--chrome-dark);
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: #2c3844;
+}
+
+.status-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.realtime-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  color: #005073;
+}
+
+@media (max-width: 840px) {
+  .pt-workspace {
+    grid-template-columns: 1fr;
+  }
+}
